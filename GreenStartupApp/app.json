@@ -1,0 +1,12 @@
+{
+  "name": "GreenStartupApp",
+  "displayName": "GreenStartupApp",
+  "expo": {
+    "name": "GreenStartupApp",
+    "slug": "GreenStartupApp",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
