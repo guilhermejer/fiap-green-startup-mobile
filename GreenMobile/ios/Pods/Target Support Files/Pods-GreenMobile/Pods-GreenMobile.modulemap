@@ -1,0 +1,6 @@
+module Pods_GreenMobile {
+  umbrella header "Pods-GreenMobile-umbrella.h"
+
+  export *
+  module * { export * }
+}
