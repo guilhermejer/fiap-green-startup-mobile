@@ -1,0 +1,50 @@
+
+
+
+
+
+
+
+
+import React, { Component } from 'react';
+import { Alert, StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Linking } from 'react-native';
+import t from 'tcomb-form-native';
+
+const Form = t.form.Form;
+
+const user = t.struct({
+    email: t.String,
+    password: t.String,
+    username: t.String,
+    terms: t.Boolean,
+});
+
+export default class Login extends Component {
+
+
+    render(){
+        return(
+           <View style={styles.container}>
+            <Form style={styles.input} type={user} />
+           </View>
+        );
+    }
+}
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'darkseagreen',
+      },
+      input: {
+        marginTop: 12,
+        padding: 15,
+        width: 200,
+        backgroundColor: '#fff',
+        fontSize: 20,
+        borderRadius: 4,
+      },
+});
