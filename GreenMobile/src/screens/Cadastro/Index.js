@@ -14,7 +14,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Input from '../../components/Input';
-import Api from '../../../Api';
+import api from '../../components/api';
 import { ScrollView } from 'react-native-gesture-handler';
 
 
@@ -24,35 +24,25 @@ export default function Cadastro(props, data) {
   const handleSubmit = async (data, { reset }) => {
     try{
     const schema = Yup.object().shape({
-      name: Yup.string()
+      nome: Yup.string()
         .required('Este campo é obrigatório'),
 
-      email: Yup.string()
-        .email('Digite um e-mail válido')
+      sobrenome: Yup.string()
         .required('Este campo é obrigatório'),
 
-      celular: Yup.string()
-        .min(10, 'Numero inválido (DDD + Numero)')
-        .required('Este campo é obrigatório'),
-
-      cep: Yup.string()
-        .min(8, 'CEP inválido (min 8 digitos)')
+      username: Yup.string()
         .required('Este campo é obrigatório'),
 
       endereco: Yup.string()
         .required('Este campo é obrigatório'),
 
-      estado: Yup.string()
-        .max(2, 'Somente a Sigla (ex. SP)')
+      hashId: Yup.string()
         .required('Este campo é obrigatório'),
 
-      cidade: Yup.string()
+      password: Yup.string()
         .required('Este campo é obrigatório'),
 
-      senha: Yup.string()
-        .required('Este campo é obrigatório'),
-
-      confirmasenha: Yup.string()
+      confPassword: Yup.string()
         .required('Este campo é obrigatório'),
        });
 
@@ -61,18 +51,22 @@ export default function Cadastro(props, data) {
          abortEarly: false,
        })
 
-    console.log(data.name);
 
-      let json = await Api.cadastro(data);
-
-      if (json.resultadopost == 'ok') {
-
-        alert("Cadastro realizado com sucesso!")
-        props.navigation.goBack();
-        console.log(json);
-      } else {
-        alert('Erro ao realizar cadastro!');
+       var pessoa = {"nome":data.nome,
+       "sobrenome":data.sobrenome,
+       "endereco":data.endereco,
+       "hashId":data.hashId,
+       "sexo":data.sexo
       }
+    var login = {"username":data.username,
+        "password":data.password}
+      
+      api.post('pessoa/createPessoa',{pessoa, login})
+      .then((res) => {console.log('Cadastro realizado com sucesso' + res.data);
+      props.navigation.goBack()})
+      .catch((err) => {
+        console.error("ops! ocorreu um erro" + err);
+     });
 
      
     reset();
@@ -105,32 +99,33 @@ export default function Cadastro(props, data) {
             source={require('../../assets/logoGreen.png')}
           />
 
-          <Input name="name" label="Nome Completo" />
+          <Input name="nome" label="Nome" />
 
           <Input
-            name="email"
-            label="E-mail"
+            name="sobrenome"
+            label="Sobrenome"
             autoCorrect={false}
             autoCapitalize="none"
-            keyboardType="email-address"
           />
-          <Input name="celular" label="Celular" keyboardType="number-pad" />
+          <Input
+            name="username"
+            label="Nome de usuário"
+            autoCorrect={false}
+            autoCapitalize="none"
+          />
 
-            <Input name="cep" label="CEP" keyboardType="number-pad" />
             <Input name="endereco" label="Endereco" />
-            <Input name="estado" label="Estado" />
-            <Input name="cidade" label="Cidade" />
-
+            <Input name="hashId" label="CPF ou CNPJ" type="number" />
 
           <Input
-            name="senha"
+            name="password"
             label="Senha"
             autoCorrect={false}
             secureTextEntry={true}
             autoCapitalize="none"
           />
           <Input
-            name="confirmasenha"
+            name="confPassword"
             label="Confirme sua senha"
             autoCorrect={false}
             secureTextEntry={true}

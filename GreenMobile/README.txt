@@ -1,3 +1,20 @@
+# Como subir o aplicativo
+Para subir o aplicativo, navegar até o diretório GreenMobile e rodar o comando:
+
+npx react-native run-android
+
+Em alguns casos o android studio não sobe o emulador sozinho, se esse for o caso, por gentileza abrir o emulador e rodar o comando novamente
+
+
+# Endereço da API
+Em nosso emulador, o endereço da "localhost:3000" da máquina é representado como "http://10.0.2.2:3000/", caso necessário é possivel alterar em "GreenMobile/src/components/api.js"
+
+
+
+
+
+
+
 App desenvolvido utilizando REACT-NATIVE  (sem o uso do expo)
 
 Funcionamento do app por telas:

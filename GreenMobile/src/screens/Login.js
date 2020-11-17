@@ -1,25 +1,28 @@
 
 import React, { useState } from 'react';
 import { Alert, StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Linking } from 'react-native';
-import Api from '../../Api';
+import api from '../components/api';
 
 
 export default function Login(props) {
-  const [emailField, setEmailField] = useState('');
+  const [usernameField, setUsernameField] = useState('');
   const [passwordField, setPasswordField] = useState('');
 
   const handleSignClick = async () => {
-    if(emailField != '' && passwordField != '') {
+    if(usernameField != '' && passwordField != '') {
 
-      let json = await Api.login(emailField, passwordField);
-
-      if(json.resultadopost == 'ok') {
-
-        props.navigation.push('Home');
-        console.log(json);
-      } else {
-          alert('E-mail e/ou senha errados!');
+      const body = {
+        username:usernameField,
+        password:passwordField
       }
+
+    api.post('login/logar', body)
+    .then((res) => {
+    console.log('Login realizado com sucesso' + res.data);
+    props.navigation.push('Home')})
+    .catch((err) => {
+      console.error("ops! ocorreu um erro" + err);
+   });
 
   } else {
       alert("Preencha os campos!");
@@ -35,14 +38,14 @@ export default function Login(props) {
 
         <TextInput
           style={styles.input}
-          placeholder="Digite seu e-mail"
-          value={emailField}
-          onChangeText={t=>setEmailField(t)}
+          placeholder="Usuário"
+          value={usernameField}
+          onChangeText={t=>setUsernameField(t)}
         />
         <TextInput
           style={styles.input}
           secureTextEntry={true}
-          placeholder="Digite sua senha"
+          placeholder="Senha"
           value={passwordField}
           onChangeText={t=>setPasswordField(t)}
           />
@@ -73,12 +76,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'darkseagreen',
+    backgroundColor: '#5f9f5f',
   },
   logo: {
     width: 150,
     height: 150,
-    borderRadius: 100
+
+  
   },
   input: {
     marginTop: 12,
