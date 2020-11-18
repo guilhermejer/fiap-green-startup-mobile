@@ -16,7 +16,7 @@ import Login from './src/screens/Login';
 import Cadastro from './src/screens/Cadastro/Index';
 import Home from './src/screens/Home/Index';
 import Perfil from './src/screens/Perfil';
-import Produto from './src/screens/Produto/Index';
+
 
 
 const MainNavigator = createStackNavigator({
@@ -33,12 +33,6 @@ const MainNavigator = createStackNavigator({
     }
   },
 
-  Produto: {
-    screen: Produto,
-    navigationOptions:{
-      headerTitle: 'Detalhes'
-    }
-  },
   Home: {
     screen: Home,
     navigationOptions: {

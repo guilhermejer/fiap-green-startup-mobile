@@ -1,78 +1,80 @@
 import React, { useRef } from 'react';
 import { Form } from '@unform/mobile';
-import { Scope } from '@unform/core';
 import * as Yup from 'yup';
 import {
-  StyleSheet,
   Text,
   Image,
   KeyboardAvoidingView,
-  TouchableWithoutFeedback,
   Platform,
-  View,
   StatusBar,
   TouchableOpacity,
 } from 'react-native';
 import Input from '../../components/Input';
 import api from '../../components/api';
 import { ScrollView } from 'react-native-gesture-handler';
+import styles from './styles'
 
 
 export default function Cadastro(props, data) {
   const formRef = useRef(null);
 
   const handleSubmit = async (data, { reset }) => {
-    try{
-    const schema = Yup.object().shape({
-      nome: Yup.string()
-        .required('Este campo é obrigatório'),
+    try {
+      const schema = Yup.object().shape({
+        nome: Yup.string()
+          .required('Este campo é obrigatório'),
 
-      sobrenome: Yup.string()
-        .required('Este campo é obrigatório'),
+        sobrenome: Yup.string()
+          .required('Este campo é obrigatório'),
 
-      username: Yup.string()
-        .required('Este campo é obrigatório'),
+        username: Yup.string()
+          .required('Este campo é obrigatório'),
 
-      endereco: Yup.string()
-        .required('Este campo é obrigatório'),
+        endereco: Yup.string()
+          .required('Este campo é obrigatório'),
 
-      hashId: Yup.string()
-        .required('Este campo é obrigatório'),
+        hashId: Yup.string()
+          .required('Este campo é obrigatório'),
 
-      password: Yup.string()
-        .required('Este campo é obrigatório'),
+        password: Yup.string()
+          .required('Este campo é obrigatório'),
 
-      confPassword: Yup.string()
-        .required('Este campo é obrigatório'),
-       });
-
-
-       await schema.validate(data, {
-         abortEarly: false,
-       })
+        confPassword: Yup.string()
+          .required('Este campo é obrigatório'),
+      });
 
 
-       var pessoa = {"nome":data.nome,
-       "sobrenome":data.sobrenome,
-       "endereco":data.endereco,
-       "hashId":data.hashId,
-       "sexo":data.sexo
+      await schema.validate(data, {
+        abortEarly: false,
+      })
+
+
+      var pessoa = {
+        "nome": data.nome,
+        "sobrenome": data.sobrenome,
+        "endereco": data.endereco,
+        "hashId": data.hashId,
+        "sexo": data.sexo
       }
-    var login = {"username":data.username,
-        "password":data.password}
-      
-      api.post('pessoa/createPessoa',{pessoa, login})
-      .then((res) => {console.log('Cadastro realizado com sucesso' + res.data);
-      props.navigation.goBack()})
-      .catch((err) => {
-        console.error("ops! ocorreu um erro" + err);
-     });
+      var login = {
+        "username": data.username,
+        "password": data.password
+      }
 
-     
-    reset();
+      api.post('pessoa/createPessoa', { pessoa, login })
+        .then((res) => {
+          console.log('Cadastro realizado com sucesso' + res.data);
+          props.navigation.goBack()
+        })
+        .catch((err) => {
+          console.error("ops! ocorreu um erro" + err);
+        });
 
-    } catch(err){
-      if (err instanceof Yup.ValidationError){
+
+      reset();
+
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
         const errorMessages = {};
 
         err.inner.forEach(error => {
@@ -114,8 +116,8 @@ export default function Cadastro(props, data) {
             autoCapitalize="none"
           />
 
-            <Input name="endereco" label="Endereco" />
-            <Input name="hashId" label="CPF ou CNPJ" type="number" />
+          <Input name="endereco" label="Endereco" />
+          <Input name="hashId" label="CPF ou CNPJ" type="number" />
 
           <Input
             name="password"
@@ -143,36 +145,3 @@ export default function Cadastro(props, data) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'stretch',
-    padding: 20,
-  },
-
-  scrollview: {
-    marginHorizontal: 20
-  },
-
-  logo: {
-    width: 150,
-    height: 150,
-    resizeMode: 'contain',
-    alignSelf: 'center',
-    borderRadius: 200
-  },
-
-  submitButton: {
-    backgroundColor: 'darkseagreen',
-    borderRadius: 4,
-    padding: 16,
-    alignItems: 'center'
-  },
-
-  submitButtonText: {
-    fontWeight: 'bold',
-    color: '#fff',
-    fontSize: 15,
-  },
-});

@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Alert, StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Linking } from 'react-native';
+import {  StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
 import api from '../components/api';
 
 
@@ -9,66 +9,67 @@ export default function Login(props) {
   const [passwordField, setPasswordField] = useState('');
 
   const handleSignClick = async () => {
-    if(usernameField != '' && passwordField != '') {
+    if (usernameField != '' && passwordField != '') {
 
       const body = {
-        username:usernameField,
-        password:passwordField
+        username: usernameField,
+        password: passwordField
       }
 
-    api.post('login/logar', body)
-    .then((res) => {
-    console.log('Login realizado com sucesso' + res.data);
-    props.navigation.push('Home')})
-    .catch((err) => {
-      console.error("ops! ocorreu um erro" + err);
-   });
+      api.post('login/logar', body)
+        .then((res) => {
+          console.log('Login realizado com sucesso' + res.data);
+          props.navigation.push('Home')
+        })
+        .catch((err) => {
+          console.error("ops! ocorreu um erro" + err);
+        });
 
-  } else {
+    } else {
       alert("Preencha os campos!");
+    }
   }
-}
 
 
-    return (
-      <View style={styles.container}>
+  return (
+    <View style={styles.container}>
 
-        <Image source={require('../assets/logoGreen.png')}
-          style={styles.logo} />
+      <Image source={require('../assets/logoGreen.png')}
+        style={styles.logo} />
 
-        <TextInput
-          style={styles.input}
-          placeholder="Usuário"
-          value={usernameField}
-          onChangeText={t=>setUsernameField(t)}
-        />
-        <TextInput
-          style={styles.input}
-          secureTextEntry={true}
-          placeholder="Senha"
-          value={passwordField}
-          onChangeText={t=>setPasswordField(t)}
-          />
+      <TextInput
+        style={styles.input}
+        placeholder="Usuário"
+        value={usernameField}
+        onChangeText={t => setUsernameField(t)}
+      />
+      <TextInput
+        style={styles.input}
+        secureTextEntry={true}
+        placeholder="Senha"
+        value={passwordField}
+        onChangeText={t => setPasswordField(t)}
+      />
 
-        <TouchableOpacity
-          style={styles.botao}
-          onPress={ handleSignClick }
-        >
-          <Text style={styles.botaoText}>Login</Text>
+      <TouchableOpacity
+        style={styles.botao}
+        onPress={handleSignClick}
+      >
+        <Text style={styles.botaoText}>Login</Text>
 
-        </TouchableOpacity>
-        
-        <Text style={styles.textCadastro}
-              onPress={ () => {props.navigation.navigate('Cadastro', props.navigation)} } >
-          Criar conta gratuita
+      </TouchableOpacity>
+
+      <Text style={styles.textCadastro}
+        onPress={() => { props.navigation.navigate('Cadastro', props.navigation) }} >
+        Criar conta gratuita
       </Text>
 
-      </View>
+    </View>
 
 
 
-    )
-  
+  )
+
 }
 
 const styles = StyleSheet.create({
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
 
-  
+
   },
   input: {
     marginTop: 12,
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'green'
   },
-  textCadastro : {
+  textCadastro: {
     fontSize: 12,
     fontWeight: 'bold',
     marginTop: 5,
